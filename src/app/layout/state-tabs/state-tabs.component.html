@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <h5 *ngFor="let tab of tabs" (click)="state=tab.state" class="col-md" [class.selected]="state === tab.state"> {{ tab.title }} </h5>
+    </div>
+</div>
+
+<progressbar class="shadowdark" [value]="((state - 0.5) / tabs.length) * 100" [striped]="true" [animate]="true"></progressbar>
+
+<div class="container">
+    <div class="row">
+        Content
+    </div>
+</div>

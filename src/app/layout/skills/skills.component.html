@@ -1,0 +1,18 @@
+<div class="row" style="text-align: center">
+    <h2 style="margin-bottom: 0px;">Skills</h2>
+</div>
+
+<div class="btn-group row d-flex justify-content-center" dropdown>
+    <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem" *ngFor="let skill of skills" [tooltip]="skill_tooltip" container="body">
+            <a (click)="train(skill)" class="dropdown-item" href="#">{{skill.name}}</a>
+            <ng-template #skill_tooltip>{{skill.description}}</ng-template>
+        </li>
+    </ul>
+</div>
+<div class="row d-flex justify-content-center" style="text-align: center; margin-bottom: 8px;" [tooltip]="skill_tooltip" container="body" *ngFor="let skill of picked; let i = index">
+    <label>{{ skill.name }} <span (click)="remove(i)" style="cursor: pointer">X</span></label>
+    <input type="number" style="width: 80px;" min="-1" max="1" maxlength="1" value="0">
+    <ng-template #skill_tooltip>{{skill.description}}</ng-template>
+</div>

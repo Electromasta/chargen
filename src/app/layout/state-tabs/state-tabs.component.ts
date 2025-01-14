@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { getBonus, renderBonus } from '../../data/interfaces/attribute';
+import { Progression, Progressions } from '../../data/interfaces/progressions';
+import { Job, Jobs } from '../../data/interfaces/job';
 
 @Component({
   selector: 'state-tabs',
@@ -7,15 +10,21 @@ import { Component } from '@angular/core';
   styleUrl: './state-tabs.component.css'
 })
 export class StateTabsComponent {
-  state = 1;
-  progress = 10;
+  getBonus = getBonus; renderBonus = renderBonus;
+  attributes: number[] = [ 10, 10, 10, 10, 10, 10 ];
+  jobs: Array<Job> = [ Jobs.Expert ];
+  progression: Progression = Progressions.Expert;
 
-  tabs = [
-    { title: "Attributes", state: 1 },
-    { title: "Backgrounds", state: 2 },
-    { title: "Classes", state: 3 },
-    { title: "Skills", state: 4 },
-    { title: "Features", state: 5 },
-    { title: "Equipment", state: 6 }
-  ]
+  consumeAttribute(a: number[]) { this.attributes = a; }
+  consumeJobs(j: Job[]) { this.jobs = j; }
+  consumeProgression(p: Progression) { this.progression = p; }
+
+  renderJobs()  {
+    return "Warrior";
+  }
+
+  calculateSavingThrow(a1: number, a2: number)  {
+    const selected = (a1 > a2) ? a1 : a2;
+    return 15 - this.getBonus(selected);
+  }
 }

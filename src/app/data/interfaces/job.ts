@@ -8,6 +8,7 @@ export interface Job extends Label {
     progression: Progression;
     bonusskill?: Skill;
     feats: Feat[];
+    artstype?: ArtsType;
     spelltype?: SpellType;
 }
 
@@ -19,9 +20,22 @@ export enum JobType {
 }
 
 export enum SpellType {
+    HIGHSPELL = 100,
+    ELEMENTALISTSPELL = 101,
+    NECROMANCERSPELL = 102
+}
+
+export enum ArtsType {
     HIGH,
     ELEMENTALIST,
     NECROMANCER,
+    BARD,
+    BEASTMASTER,
+    DUELIST,
+    PRIEST,
+    SKINSHIFTER,
+    VOWED,
+    WISE
 }
 
 export class ClassFeats {
@@ -57,26 +71,28 @@ const shifterDesc = "A shifter has the supernatural ability to change shape, mea
 const beastmasterDesc = "Beastmasters have a special connection with nature, allowing them to befriend and command the most Dire of Beasts.  Beastmasters are a Specialist Class that must be taken with another class.";
 const priestDesc = "Your hero is a chosen man or woman of a god, empowered with miracles to punish evildooers and influence communities towards order with healing.  Priests are a Specialist Class that must be taken with another class.";
 
-export class Jobs {
+export class BasicJobs {
     static readonly Warrior: Job = { name: "Warrior", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, feats: [ClassFeats.KillingBlow, ClassFeats.VeteransLuck], description: warriorDesc };
     static readonly Expert: Job = { name: "Expert", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [ClassFeats.MasterfulExpertise, ClassFeats.QuickLearner], description: expertDesc };
-    static readonly Mage: Job = { name: "Mage", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.HIGH, feats: [], description: mageDesc };
+    static readonly Mage: Job = { name: "Mage", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.HIGHSPELL, feats: [], description: mageDesc };
+}
 
+export class Jobs {
     static readonly PartialWarrior: Job = { name: "Warrior", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, feats: [ClassFeats.CrushingBlow], description: warriorDesc };
     static readonly PartialExpert: Job = { name: "Expert", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [ClassFeats.QuickLearner], description: expertDesc };
-    static readonly PartialMage: Job = { name: "Mage", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.HIGH, feats: [], description: mageDesc };
+    static readonly PartialMage: Job = { name: "Mage", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.HIGHSPELL, feats: [], artstype: ArtsType.HIGH, description: mageDesc };
 
     static readonly Fighter: Job = { name: "Fighter", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, feats: [ClassFeats.MightyDeeds], description: fighterDesc };
-    static readonly Duelist: Job = { name: "Duelist", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, bonusskill: Skills.Martial, feats: [ClassFeats.FavoredWeapon], description: duelistDesc };
+    static readonly Duelist: Job = { name: "Duelist", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, bonusskill: Skills.Martial, feats: [ClassFeats.FavoredWeapon], artstype: ArtsType.DUELIST, description: duelistDesc };
 
-    static readonly Bard: Job = { name: "Bard", progression: Progressions.Expert, jobtype: JobType.EXPERT, bonusskill: Skills.Perform, feats: [ClassFeats.ThousandTongues], description: bardDesc };
-    static readonly Wise: Job = { name: "Wise", progression: Progressions.Expert, jobtype: JobType.EXPERT, bonusskill: MetaSkills.AnyNonCombat, feats: [ClassFeats.BonusArt], description: wiseDesc };
+    static readonly Bard: Job = { name: "Bard", progression: Progressions.Expert, jobtype: JobType.EXPERT, bonusskill: Skills.Perform, feats: [ClassFeats.ThousandTongues], artstype: ArtsType.BARD, description: bardDesc };
+    static readonly Wise: Job = { name: "Wise", progression: Progressions.Expert, jobtype: JobType.EXPERT, bonusskill: MetaSkills.AnyNonCombat, feats: [], artstype: ArtsType.WISE, description: wiseDesc };
 
-    static readonly Elementalist: Job = { name: "Elementalist", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.ELEMENTALIST, feats: [], description: eleDesc };
-    static readonly Necromancer: Job = { name: "Necromancer", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.NECROMANCER, feats: [], description: necroDesc };
+    static readonly Elementalist: Job = { name: "Elementalist", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.ELEMENTALISTSPELL, feats: [], artstype: ArtsType.ELEMENTALIST, description: eleDesc };
+    static readonly Necromancer: Job = { name: "Necromancer", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.NECROMANCERSPELL, feats: [], artstype: ArtsType.NECROMANCER, description: necroDesc };
 
-    static readonly Monk: Job = { name: "Monk", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Athletics, feats: [ClassFeats.MartialArts], description: monkDesc };
-    static readonly Shifter: Job = { name: "Shifter", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Survival, feats: [ClassFeats.ChangeForm], description: shifterDesc };
-    static readonly Beastmaster: Job = { name: "Beastmaster", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Survival, feats: [ClassFeats.BindCompanion], description: beastmasterDesc };
-    static readonly Priest: Job = { name: "Priest", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Prayer, feats: [ClassFeats.BonusArt], description: priestDesc };
+    static readonly Monk: Job = { name: "Monk", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Athletics, feats: [ClassFeats.MartialArts], artstype: ArtsType.VOWED, description: monkDesc };
+    static readonly Shifter: Job = { name: "Shifter", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Survival, feats: [ClassFeats.ChangeForm], artstype: ArtsType.SKINSHIFTER, description: shifterDesc };
+    static readonly Beastmaster: Job = { name: "Beastmaster", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Survival, feats: [ClassFeats.BindCompanion], artstype: ArtsType.BEASTMASTER, description: beastmasterDesc };
+    static readonly Priest: Job = { name: "Priest", progression: Progressions.Mage, jobtype: JobType.SPECIALIST, bonusskill: Skills.Prayer, feats: [ClassFeats.BonusArt], artstype: ArtsType.PRIEST, description: priestDesc };
 }

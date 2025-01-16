@@ -1,9 +1,25 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { toArray } from '../../data/interfaces/attribute';
-import { Job, Jobs } from '../../data/interfaces/job';
+import { ArtsType, Job, Jobs, SpellType } from '../../data/interfaces/job';
 import { FeatType } from '../../data/interfaces/progressions';
 import { renderBonus } from '../../data/interfaces/attribute';
 import { Progression, Progressions } from '../../data/interfaces/progressions';
+import { Feat } from '../../data/interfaces/feats';
+
+import { HighMageSpells } from '../../data/interfaces/spells/highmage-spells';
+import { ElementalistSpells } from '../../data/interfaces/spells/elementalist-spells';
+import { NecromancerSpells } from '../../data/interfaces/spells/necromancer-spells';
+
+import { BardArts } from '../../data/interfaces/arts/bard-arts';
+import { BeastMasterArts } from '../../data/interfaces/arts/beastmaster-arts';
+import { DuelistArts } from '../../data/interfaces/arts/duelist-arts';
+import { ElementalistArts } from '../../data/interfaces/arts/elementalist-arts';
+import { HighMageArts } from '../../data/interfaces/arts/highmage-arts';
+import { NecromancerArts } from '../../data/interfaces/arts/necromancer-arts';
+import { PriestArts } from '../../data/interfaces/arts/priest-arts';
+import { ShifterArts } from '../../data/interfaces/arts/skinshifter-arts';
+import { VowedArts } from '../../data/interfaces/arts/vowed-arts';
+import { WiseArts } from '../../data/interfaces/arts/wise-arts';
 
 @Component({
   selector: 'jobs',
@@ -69,5 +85,44 @@ export class JobsComponent {
       default:
         this.computedProgression = Progressions.ErrorProgression; break;
     }
+  }
+
+  computeSupernatural(powersource: ArtsType | SpellType)  {
+    let abilities: Feat[];
+    Jobs.PartialMage.artstype;
+
+    switch(true)  {
+      case (powersource === SpellType.HIGHSPELL):
+        abilities = toArray(HighMageSpells); break;
+      case (powersource === SpellType.ELEMENTALISTSPELL):
+        abilities = toArray(ElementalistSpells); break;
+      case (powersource === SpellType.NECROMANCERSPELL):
+        abilities = toArray(NecromancerSpells); break;
+
+      case (powersource === ArtsType.HIGH):
+        abilities = toArray(HighMageArts); break;
+      case (powersource === ArtsType.ELEMENTALIST):
+        abilities = toArray(ElementalistArts); break;
+      case (powersource === ArtsType.NECROMANCER):
+        abilities = toArray(NecromancerArts); break;
+
+      case (powersource === ArtsType.BARD):
+        abilities = toArray(BardArts); break;
+      case (powersource === ArtsType.BEASTMASTER):
+        abilities = toArray(BeastMasterArts); break;
+      case (powersource === ArtsType.DUELIST):
+        abilities = toArray(DuelistArts); break;
+      case (powersource === ArtsType.PRIEST):
+        abilities = toArray(PriestArts); break;
+      case (powersource === ArtsType.SKINSHIFTER):
+        abilities = toArray(ShifterArts); break;
+      case (powersource === ArtsType.VOWED):
+        abilities = toArray(VowedArts); break;
+      case (powersource === ArtsType.WISE):
+        abilities = toArray(WiseArts); break;
+      default:
+        abilities = toArray(HighMageSpells); break;
+    }
+    return abilities;
   }
 }

@@ -24,11 +24,35 @@
     <label>Feats: <ng-container *ngFor="let f of computedProgression?.feats">+{{ f }} </ng-container></label>
 </div>
 
-<label *ngIf="picked.length > 2">Class Features: </label>
-<div class="row" container="body" *ngFor="let job of picked; let i = index">
+<div *ngIf="picked.length > 0 && computedProgression.arts != null" class="row">
+    <label>Arts: {{ computedProgression.arts }} </label>
+</div>
+
+<div *ngIf="picked.length > 0 && computedProgression.spellslots != null" class="row">
+    <label>Spells Prepped: {{ computedProgression.spellsprep }}, Spell Slots:  {{ computedProgression.spellslots }}</label>
+</div>
+
+<label *ngIf="picked.length > 0" class="thick" style="font-weight: bold;">Class Features: </label>
+<div class="row" *ngFor="let job of picked; let i = index">
     <p *ngIf="job.bonusskill">Add/ Train {{ job.bonusskill.name }} Skill</p>
     <ng-container *ngFor="let f of job.feats">
         <label class="thick" style="font-weight: bold;"> {{ f.name }} </label>
         <label> {{ f.description }} </label>
     </ng-container>
+</div>
+
+<div *ngIf="picked.length > 0 && picked[0].artstype != null" class="row">
+    <feat-picker [label]="picked[0].name + ' ' + 'Arts'" [feats]="computeSupernatural(picked[0].artstype)"></feat-picker>
+</div>
+
+<div *ngIf="picked.length > 0 && picked[0].spelltype != null" class="row">
+    <feat-picker [label]="picked[0].name + ' ' + 'Spells'" [feats]="computeSupernatural(picked[0].spelltype)"></feat-picker>
+</div>
+
+<div *ngIf="picked.length > 1 && picked[1].artstype != null" class="row">
+    <feat-picker [label]="picked[1].name + ' ' + 'Arts'" [feats]="computeSupernatural(picked[1].artstype)"></feat-picker>
+</div>
+
+<div *ngIf="picked.length > 1 && picked[1].spelltype != null" class="row">
+    <feat-picker [label]="picked[1].name + ' ' + 'Spells'" [feats]="computeSupernatural(picked[1].spelltype)"></feat-picker>
 </div>

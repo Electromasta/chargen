@@ -1,0 +1,71 @@
+<div class="row">
+    <h1 class="col-md-4"><editable-label label="Character Name"></editable-label></h1>
+    <h1 class="col-md-4"><editable-label label="Class Title Name"></editable-label></h1>
+    <h1 class="col-md-4"><editable-label label="Player Name"></editable-label></h1>
+</div>
+
+<div class="row">
+    <h3 class="col-md-4">Level 1</h3>
+    <h3 class="col-md-4">{{ renderJobs() }}</h3>
+    <h3 class="col-md-2">Human {{background.name}}</h3>
+    <div class="col-md-2">
+        <div class="btn-group row d-flex justify-content-center" dropdown>
+            <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" *ngFor="let background of Backgrounds" [tooltip]="background_tooltip" container="body">
+                    <a (click)="pickBackground(background)" class="dropdown-item" href="#">{{background.name}}</a>
+                    <ng-template #background_tooltip>{{ background.description }}</ng-template>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <h6 class="col-md-3">Attack Bonus: {{ renderBonus(progression.bab) }}</h6>
+            <h6 class="col-md-3">Luck Save: 15</h6>
+            <h6 class="col-md-3">Armor Class: {{ armor + getBonus(attributes[1]) }}</h6>
+            <h6 class="col-md-3">Hit Dice: 1d6{{ renderBonus(progression.hitdice)}}</h6>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <h6 class="col-md-3">Max Strain: {{ attributes[2] }}</h6>
+            <h6 class="col-md-3">Physical Save: {{ calculateSavingThrow(attributes[0], attributes[2]) }}</h6>
+            <h6 class="col-md-3">Evasion Save: {{ calculateSavingThrow(attributes[1], attributes[3]) }}</h6>
+            <h6 class="col-md-3">Mental Save: {{ calculateSavingThrow(attributes[4], attributes[5]) }}</h6>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-6">
+                <attributes (bonusesEvent)="consumeAttribute($event)"></attributes>
+            </div>
+            <div class="col-md-6">
+                <skills></skills>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <jobs (jobsEvent)="consumeJobs($event)" (progressionEvent)="consumeProgression($event)"></jobs>
+    </div>
+    <div class="col-md-3">
+        <features></features>
+    </div>
+    <div class="col-md-3">
+        <equipment (armorEvent)="consumeArmor($event)"></equipment>
+        <div class="row" style="text-align: center">
+            <h2 style="margin-bottom: 0px;">Story</h2>
+        </div>
+        <div class="row">
+            {{background.description}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="row" style="text-align: center">
+    <h2 style="margin-bottom: 0px;">Equipment</h2>
+</div>
+
+<!-- Weapon Picker -->
+<div class="row">
+    <label class="col-md-6 thick" style="font-weight: bold;">Weapons</label>
+    <div class="col-md-6 btn-group row d-flex justify-content-center" dropdown>
+        <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" *ngFor="let weapon of Weapons" [tooltip]="weapon_tooltip" container="body">
+                <a (click)="train(weapon)" class="dropdown-item" href="#">{{weapon.name}}</a>
+                <ng-template #weapon_tooltip>{{ weapon.value }} {{ weapon.shock }}, {{ weapon.description }}</ng-template>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row d-flex justify-content-center" style="text-align: center; margin-bottom: 8px;" container="body" *ngFor="let weapon of picked; let i = index">
+    <label class="thick" style="font-weight: bold;">{{ weapon.name }} <span (click)="remove(i)" style="cursor: pointer">X</span></label>
+    <p>{{ weapon.value }} {{ weapon.shock }}, {{ weapon.description }}</p>
+</div>
+
+<!-- Armor Picker -->
+<div class="row">
+    <label class="col-md-6 thick" style="font-weight: bold;">{{ armor.name }}</label>
+    <div class="col-md-6 btn-group row d-flex justify-content-center" dropdown>
+        <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" *ngFor="let armor of Armors" [tooltip]="armor_tooltip" container="body">
+                <a (click)="pickArmor(armor)" class="dropdown-item" href="#">{{armor.name}}</a>
+                <ng-template #armor_tooltip>{{ armor.description }}</ng-template>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <p>{{ armor.description }}, Bulk: {{ armor.weight }}</p>
+</div>
+
+<!-- Bundle Picker -->
+<div class="row">
+    <label class="col-md-6 thick" style="font-weight: bold;">{{ bundle.name }}</label>
+    <div class="col-md-6 btn-group row d-flex justify-content-center" dropdown>
+        <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" *ngFor="let bundle of Bundles" [tooltip]="bundle_tooltip" container="body">
+                <a (click)="pickBundle(bundle)" class="dropdown-item" href="#">{{bundle.name}}</a>
+                <ng-template #bundle_tooltip>{{ bundle.description }}</ng-template>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <p>{{ bundle.description }} Bulk: {{ bundle.weight }}</p>
+</div>
+
+<!-- Starter Gear -->
+<div class="row" *ngFor="let gear of StarterGear; let i = index">
+    <label class="thick" style="font-weight: bold;">{{ gear.name }}</label>
+    <p>{{ gear.description}} Bulk: {{ gear.weight }}</p>
+</div>
+
+
+

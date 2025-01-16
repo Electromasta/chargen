@@ -1,0 +1,4 @@
+.ws { background-color: whitesmoke; }
+h5 { border-style: solid; border-width: 0px; text-align: center; margin-bottom: 0.1rem; }
+h5:hover, h5.selected { border-bottom-width: 2px; user-select: none; cursor: pointer; background-color: lightgrey !important; }
+.shadowdark { --bs-progress-bar-bg: black; --bs-progress-border-radius: 0rem; --bs-progress-height: 0.5rem; }

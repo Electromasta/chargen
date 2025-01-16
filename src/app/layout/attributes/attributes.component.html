@@ -1,0 +1,11 @@
+<div class="row" style="text-align: center">
+  <h2>Attributes</h2>
+</div>
+
+<div class="row d-flex justify-content-center" style="text-align: center" [tooltip]="attribute_tooltip" container="body" *ngFor="let attribute of attributes; let i = index">
+  <label>{{ attribute.name }}</label>
+  <br />
+  <input (click)="emitBonuses()" [(ngModel)]="bonuses[i]" type="number" style="width: 80px; margin-right: 20px;" min="2" max="20" maxlength="2">
+  <h3>{{renderBonus(getBonus(bonuses[i]))}}</h3>
+  <ng-template #attribute_tooltip>{{attribute.description}}</ng-template>
+</div>

@@ -1,6 +1,6 @@
-<label class="col-md-6 thick" style="font-weight: bold;">{{label}}</label>
-<div class="col-md-6 btn-group row d-flex justify-content-center" dropdown>
-    <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span></button>
+
+<div class="col-md-12 btn-group row d-flex justify-content-center" dropdown>
+    <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"> <label class="col-md-6 thick" style="font-weight: bold;">{{label}}</label> &nbsp; <fa-icon [icon]="faCaretDown"></fa-icon></button>
     <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
         <li role="menuitem" *ngFor="let feat of feats" [tooltip]="picker_tooltip" container="body">
             <a (click)="push(feat)" class="dropdown-item" href="#">{{feat.name}}</a>
@@ -8,7 +8,7 @@
         </li>
     </ul>
 </div>
-<div class="row d-flex justify-content-center" style="text-align: center; margin-bottom: 8px;" container="body" *ngFor="let feat of picked; let i = index">
-    <label class="thick" style="font-weight: bold;">{{ feat.name }} <span (click)="pop(i)" style="cursor: pointer">X</span></label>
+<div class="row" style="margin-bottom: 8px;" container="body" *ngFor="let feat of picked; let i = index">
+    <label class="thick" style="font-weight: bold;">{{ feat.name }} test <fa-icon (click)="pop(i)" style="cursor: pointer" [icon]="faCircleXmark"></fa-icon></label>
     <p>{{ feat.description }}</p>
 </div>

@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { toArray } from '../../data/interfaces/attribute';
-import { ArtsType, Job, Jobs, SpellType } from '../../data/interfaces/job';
+import { ArtsType, Job, Jobs, BasicJobs, SpellType } from '../../data/interfaces/job';
 import { FeatType } from '../../data/interfaces/progressions';
 import { renderBonus } from '../../data/interfaces/attribute';
 import { Progression, Progressions } from '../../data/interfaces/progressions';
 import { Feat } from '../../data/interfaces/feats';
+import { faPlus, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { HighMageSpells } from '../../data/interfaces/spells/highmage-spells';
 import { ElementalistSpells } from '../../data/interfaces/spells/elementalist-spells';
@@ -28,24 +29,33 @@ import { WiseArts } from '../../data/interfaces/arts/wise-arts';
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css'
 })
-export class JobsComponent {
+export class JobsComponent implements OnChanges {
   @Output() jobsEvent = new EventEmitter<Array<Job>>();
   @Output() progressionEvent = new EventEmitter<Progression>();
   jobs: Array<Job> = toArray(Jobs);
-  picked: Array<Job> = [];
+  @Input() picked: Array<Job> = [];
   computedProgression: Progression = Progressions.ErrorProgression;
   FeatType = FeatType;
+  faPlus = faPlus; faCircleXmark = faCircleXmark;
 
   emitJobs() { this.jobsEvent.emit(this.picked); }
   emitProg() { this.progressionEvent.emit(this.computedProgression); }
 
-  train(job: Job) {
-    this.picked.push(job);
+  ngOnChanges(changes: SimpleChanges): void {
+
+    console.log(changes);
+    this.train();
+  }
+
+  train() {
+    //this.picked.push(job);
 
     if (this.picked.length == 2) 
       this.computeDualClass();
+    else if (this.picked.length == 1) 
+      this.computeSingleClass();
     else
-      this.computedProgression = job.progression;
+      this.computedProgression = Progressions.ErrorProgression;
 
     this.emitJobs();
     this.emitProg();
@@ -59,7 +69,19 @@ export class JobsComponent {
     return renderBonus(n);
   }
 
+  computeSingleClass()  {
+    if (this.picked[0].name == "Warrior") { this.picked[0] = BasicJobs.Warrior; }
+    if (this.picked[0].name == "Expert")  { this.picked[0] = BasicJobs.Expert; }
+
+    this.computedProgression = this.picked[0].progression;
+  }
+
   computeDualClass()  {
+    if (this.picked[0].name == "Warrior") { this.picked[0] = Jobs.PartialWarrior; }
+    if (this.picked[0].name == "Expert")  { this.picked[0] = Jobs.PartialExpert; }
+    if (this.picked[1].name == "Warrior") { this.picked[1] = Jobs.PartialWarrior; }
+    if (this.picked[1].name == "Expert")  { this.picked[1] = Jobs.PartialExpert; }
+
     var merged: number = this.picked[0].jobtype + this.picked[1].jobtype;
     switch(true)  {
       case (merged === 2):
@@ -95,9 +117,9 @@ export class JobsComponent {
       case (powersource === SpellType.HIGHSPELL):
         abilities = toArray(HighMageSpells); break;
       case (powersource === SpellType.ELEMENTALISTSPELL):
-        abilities = toArray(ElementalistSpells); break;
+        abilities = toArray(ElementalistSpells).concat(toArray(HighMageSpells)); break;
       case (powersource === SpellType.NECROMANCERSPELL):
-        abilities = toArray(NecromancerSpells); break;
+        abilities = toArray(NecromancerSpells).concat(toArray(HighMageSpells)); break;
 
       case (powersource === ArtsType.HIGH):
         abilities = toArray(HighMageArts); break;

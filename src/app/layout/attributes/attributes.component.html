@@ -5,7 +5,9 @@
 <div class="row d-flex justify-content-center" style="text-align: center" [tooltip]="attribute_tooltip" container="body" *ngFor="let attribute of attributes; let i = index">
   <label>{{ attribute.name }}</label>
   <br />
-  <input (click)="emitBonuses()" [(ngModel)]="bonuses[i]" type="number" style="width: 80px; margin-right: 20px;" min="2" max="20" maxlength="2">
+  <div class="input-group mb-3">
+    <input (click)="emitBonuses()" [(ngModel)]="bonuses[i]" class="form-control" type="number"  min="2" max="20" maxlength="2">
+  </div>
   <h3>{{renderBonus(getBonus(bonuses[i]))}}</h3>
   <ng-template #attribute_tooltip>{{attribute.description}}</ng-template>
 </div>

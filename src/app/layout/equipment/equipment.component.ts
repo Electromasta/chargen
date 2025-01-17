@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { toArray } from '../../data/interfaces/attribute';
 import { Equipment, Armors, Weapons, Bundles, StarterGear } from '../../data/interfaces/equipment';
+import { faCircleXmark, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'equipment',
@@ -10,6 +11,7 @@ import { Equipment, Armors, Weapons, Bundles, StarterGear } from '../../data/int
 })
 export class EquipmentComponent {
   @Output() armorEvent = new EventEmitter<string>();
+  faCircleXmark = faCircleXmark; faCaretDown = faCaretDown;
   Armors: Array<Equipment> = toArray(Armors);
   Weapons: Array<Equipment> = toArray(Weapons);
   Bundles: Array<Equipment> = toArray(Bundles);

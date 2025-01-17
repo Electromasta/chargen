@@ -1,10 +1,10 @@
-<ng-content></ng-content> {{ label }} &nbsp; 
+{{ label }} &nbsp;
 <fa-icon *ngIf="!editMode" (click)="editMode = !editMode" [icon]="faPenToSquare"></fa-icon>
 <fa-icon *ngIf="editMode" (click)="editMode = !editMode" [icon]="faFloppyDisk"></fa-icon>
 
 <ng-container *ngIf="editMode">
     <div class="input-group col-md-4">
-        <input [(ngModel)]="label" type="text" class="form-control">
+        <input [(ngModel)]="label" (keydown.enter)="editMode = !editMode" type="text" class="form-control">
     </div>
 </ng-container>
 

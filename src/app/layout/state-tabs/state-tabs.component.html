@@ -5,18 +5,54 @@
 </div>
 
 <div class="row">
-    <h3 class="col-md-4">Level 1</h3>
-    <h3 class="col-md-4">{{ renderJobs() }}</h3>
-    <h3 class="col-md-2">Human {{background.name}}</h3>
-    <div class="col-md-2">
+    <div class="col-md-4">
         <div class="btn-group row d-flex justify-content-center" dropdown>
-            <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
-            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                <li role="menuitem" *ngFor="let background of Backgrounds" [tooltip]="background_tooltip" container="body">
-                    <a (click)="pickBackground(background)" class="dropdown-item" href="#">{{background.name}}</a>
-                    <ng-template #background_tooltip>{{ background.description }}</ng-template>
+            <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;" [tooltip]="race_tooltip"> <h3> {{ race.name }} &nbsp; <fa-icon [icon]="faCaretDown"></fa-icon></h3> </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li role="menuitem" *ngFor="let race of Races" [tooltip]="race_tooltip" container="body">
+                    <a (click)="pickRace(race)" class="dropdown-item" href="#">{{race.name}}</a>
+                    <ng-template #race_tooltip>
+                        Traits: {{ race.bonus }}, {{ race.bane }}, {{ race.sense }}, {{ race.skill }}<br />
+                        {{ race.description }}
+                    </ng-template>
                 </li>
             </ul>
+            <ng-template #race_tooltip>
+                Traits: {{ race.bonus }}, {{ race.bane }}, {{ race.sense }}, {{ race.skill }}<br />
+                {{ race.description }}
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="btn-group row d-flex justify-content-center" dropdown>
+            <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"> <h3> {{ renderJobs() }} &nbsp; <fa-icon [icon]="faPlus"></fa-icon></h3> </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li role="menuitem" *ngFor="let job of Jobs" [tooltip]="job_tooltip" container="body">
+                    <a (click)="pickJob(job)" class="dropdown-item" href="#">{{job.name}}</a>
+                    <ng-template #job_tooltip>{{ job.description }}</ng-template>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="btn-group row d-flex justify-content-center" dropdown>
+            <button dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;" [tooltip]="background_tooltip"> <h3> {{background.name}} &nbsp; <fa-icon [icon]="faCaretDown"></fa-icon></h3> </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li role="menuitem" *ngFor="let background of Backgrounds" [tooltip]="background_tooltip" container="body">
+                    <a (click)="pickBackground(background)" class="dropdown-item" href="#">{{background.name}}</a>
+                    <ng-template #background_tooltip>
+                        Skills: {{ background.free.name }}, {{ background.quick[0].name }}, {{ background.quick[1].name }} <br />
+                        {{ background.description }}
+                    </ng-template>
+                </li>
+            </ul>
+            <ng-template #background_tooltip>
+                Skills: {{ background.free.name }}, {{ background.quick[0].name }}, {{ background.quick[1].name }} <br />
+                {{ background.description }}
+            </ng-template>
         </div>
     </div>
 </div>
@@ -53,19 +89,19 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <jobs (jobsEvent)="consumeJobs($event)" (progressionEvent)="consumeProgression($event)"></jobs>
+    <div class="col-md-5">
+        <jobs [picked]="jobs.slice()" (jobsEvent)="consumeJobs($event)" (progressionEvent)="consumeProgression($event)"></jobs>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <features></features>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <equipment (armorEvent)="consumeArmor($event)"></equipment>
         <div class="row" style="text-align: center">
             <h2 style="margin-bottom: 0px;">Story</h2>
         </div>
         <div class="row">
-            {{background.description}}
+            <p>{{background.description}}</p>
         </div>
     </div>
 </div>

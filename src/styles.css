@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.thick { font-weight: bold; }
+body  { background-color: #32302F; color: #E8D6AF; }
+p { color: #807367; }
+button.btn { color: #E8D6AF; --bs-btn-color: #E8D6AF; }
+div.btn-group { margin-left: 0px !important; }
+button { text-align: left !important; }
+input { background-color: #403D3C !important; border-width: 0px !important; color: #E8D6AF !important; }
+.dropdown-toggle::after { all: unset }

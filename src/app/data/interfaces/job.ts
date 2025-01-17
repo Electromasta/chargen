@@ -41,6 +41,7 @@ export enum ArtsType {
 export class ClassFeats {
     static readonly MasterfulExpertise: Feat = {name: "Masterful Expertise", skill: MetaSkills.NoSkill, description: "Once per scene, the Expert may reroll any non-combat skill check, choosing the higher roll." };
     static readonly QuickLearner: Feat = {name: "Quick Learner", skill: MetaSkills.NoSkill, description: "Gain an extra skill point, that can be spent on non combat skills or raising attributes." };
+    static readonly JuryRig: Feat = {name: "Jury Rig", skill: MetaSkills.NoSkill, description: "The expert has the ability to modify equipment with ancient salvage using a crafting check and the appropriate tools." };
     static readonly KillingBlow: Feat = {name: "Killing Blow", skill: MetaSkills.NoSkill, description: "Whenever a warrior inflicts damage with an attack, spell or ability, they may add half their level to damage/shock." };
     static readonly CrushingBlow: Feat = {name: "Crushing Blow", skill: MetaSkills.NoSkill, description: "Whenever a warrior inflicts damage with an attack, spell or ability, they may add one third their level to damage/shock." };
     static readonly VeteransLuck: Feat = {name: "Veteran's Luck", skill: MetaSkills.NoSkill, description: "Once per scene, the Warrior may turn a missed attack into a hit, or a successful attack against them to a miss." };
@@ -71,15 +72,20 @@ const shifterDesc = "A shifter has the supernatural ability to change shape, mea
 const beastmasterDesc = "Beastmasters have a special connection with nature, allowing them to befriend and command the most Dire of Beasts.  Beastmasters are a Specialist Class that must be taken with another class.";
 const priestDesc = "Your hero is a chosen man or woman of a god, empowered with miracles to punish evildooers and influence communities towards order with healing.  Priests are a Specialist Class that must be taken with another class.";
 
+export class ErrorJobs {
+    static readonly DefaultJob: Job = { name: "Pick 1-2 Classes", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [], description: expertDesc };
+}
+
 export class BasicJobs {
     static readonly Warrior: Job = { name: "Warrior", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, feats: [ClassFeats.KillingBlow, ClassFeats.VeteransLuck], description: warriorDesc };
-    static readonly Expert: Job = { name: "Expert", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [ClassFeats.MasterfulExpertise, ClassFeats.QuickLearner], description: expertDesc };
+    static readonly Expert: Job = { name: "Expert", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [ClassFeats.MasterfulExpertise, ClassFeats.QuickLearner, ClassFeats.JuryRig], description: expertDesc };
     static readonly Mage: Job = { name: "Mage", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.HIGHSPELL, feats: [], description: mageDesc };
+
 }
 
 export class Jobs {
     static readonly PartialWarrior: Job = { name: "Warrior", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, feats: [ClassFeats.CrushingBlow], description: warriorDesc };
-    static readonly PartialExpert: Job = { name: "Expert", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [ClassFeats.QuickLearner], description: expertDesc };
+    static readonly PartialExpert: Job = { name: "Expert", progression: Progressions.Expert, jobtype: JobType.EXPERT, feats: [ClassFeats.QuickLearner, ClassFeats.JuryRig], description: expertDesc };
     static readonly PartialMage: Job = { name: "Mage", progression: Progressions.Mage, jobtype: JobType.MAGE, bonusskill: Skills.Arcane, spelltype: SpellType.HIGHSPELL, feats: [], artstype: ArtsType.HIGH, description: mageDesc };
 
     static readonly Fighter: Job = { name: "Fighter", progression: Progressions.Warrior, jobtype: JobType.WARRIOR, feats: [ClassFeats.MightyDeeds], description: fighterDesc };

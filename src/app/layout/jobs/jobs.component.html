@@ -1,45 +1,37 @@
-<div class="row" style="text-align: center">
-    <h2 style="margin-bottom: 0px;">Class</h2>
-</div>
-
-<div *ngIf="picked.length < 2" class="btn-group row d-flex justify-content-center" dropdown>
-    <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" aria-controls="dropdown-basic" style="padding: 0px;"><span class="caret"></span> </button>
-    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-        <li role="menuitem" *ngFor="let job of jobs" [tooltip]="job_tooltip" container="body">
-            <a (click)="train(job)" class="dropdown-item" href="#">{{job.name}}</a>
-            <ng-template #job_tooltip>{{job.description}}</ng-template>
-        </li>
-    </ul>
-</div>
 
 <div class="row d-flex justify-content-center" style="text-align: center; margin-bottom: 8px;" container="body">
-    <label *ngFor="let job of picked; let i = index" class="col-md-6" [tooltip]="job_tooltip" container="body"  style="font-weight: bold;">
+    <h2 *ngFor="let job of picked; let i = index" class="col-md-6" [tooltip]="job_tooltip" container="body"  style="font-weight: bold;">
         {{ job.name }}
-        <span (click)="remove(i)" style="cursor: pointer">X</span>
+        <fa-icon (click)="remove(i)" style="cursor: pointer" [icon]="faCircleXmark"></fa-icon>
         <ng-template #job_tooltip>{{job.description}}</ng-template>
-    </label>
+    </h2>
 </div>
 
 <div *ngIf="picked.length > 0" class="row">
-    <label>Feats: <ng-container *ngFor="let f of computedProgression?.feats">+{{ f }} </ng-container></label>
+    <label>
+        Feats: <ng-container *ngFor="let f of computedProgression?.feats">+{{ f }} </ng-container> 
+        <ng-container *ngIf="computedProgression.arts != null">, Arts: {{ computedProgression.arts }}</ng-container>
+        <ng-container *ngIf="computedProgression.spellslots != null">, Spells Prepped: {{ computedProgression.spellsprep }}, Spell Slots:  {{ computedProgression.spellslots }}</ng-container>
+        <ng-container *ngFor="let job of picked; let i = index"><ng-container *ngIf="job.bonusskill">, Add/ Train {{ job.bonusskill.name }} Skill</ng-container></ng-container>
+    </label>
 </div>
 
-<div *ngIf="picked.length > 0 && computedProgression.arts != null" class="row">
+<!--<div *ngIf="picked.length > 0 && computedProgression.arts != null" class="row">
     <label>Arts: {{ computedProgression.arts }} </label>
 </div>
 
 <div *ngIf="picked.length > 0 && computedProgression.spellslots != null" class="row">
     <label>Spells Prepped: {{ computedProgression.spellsprep }}, Spell Slots:  {{ computedProgression.spellslots }}</label>
+</div>-->
+
+<div class="row" *ngFor="let job of picked; let i = index">
+    <ng-container *ngFor="let f of job.feats">
+        <label class="thick" style="font-weight: bold;"> {{ f.name }} </label>
+        <p> {{ f.description }} </p>
+    </ng-container>
 </div>
 
 <label *ngIf="picked.length > 0" class="thick" style="font-weight: bold;">Class Features: </label>
-<div class="row" *ngFor="let job of picked; let i = index">
-    <p *ngIf="job.bonusskill">Add/ Train {{ job.bonusskill.name }} Skill</p>
-    <ng-container *ngFor="let f of job.feats">
-        <label class="thick" style="font-weight: bold;"> {{ f.name }} </label>
-        <label> {{ f.description }} </label>
-    </ng-container>
-</div>
 
 <div *ngIf="picked.length > 0 && picked[0].artstype != null" class="row">
     <feat-picker [label]="picked[0].name + ' ' + 'Arts'" [feats]="computeSupernatural(picked[0].artstype)"></feat-picker>
